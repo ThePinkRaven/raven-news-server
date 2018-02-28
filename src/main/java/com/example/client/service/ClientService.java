@@ -7,4 +7,8 @@ public interface ClientService
 	long addClient(Client client);
 
 	Client getClient(long id);
+
+	Iterable<Client> getAllClients();
+
+	Client getClient(String name);
 }

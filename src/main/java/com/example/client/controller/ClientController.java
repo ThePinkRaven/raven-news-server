@@ -23,20 +23,37 @@ public class ClientController
 	}
 
 	@ResponseBody
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	public Iterable<Client> getAllClients()
+	{
+		return clientService.getAllClients();
+	}
+
+	@ResponseBody
+	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Client getClient(@PathVariable("id") long id)
 	{
-		// do serwisu verifyFruitExists(id);
-
 		return clientService.getClient(id);
 	}
 
 	@ResponseBody
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public long addClient(@RequestBody(required = false) Client client)
+	public long addClient(@RequestBody(required = true) Client client)
 	{
 		verifyCorrectPayload(client);
+
+		return clientService.addClient(client);
+	}
+
+	@ResponseBody
+	@ResponseStatus(HttpStatus.OK)
+	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public long updateClient(@PathVariable("id") Integer id, @RequestBody Client client)
+	{
+		verifyCorrectPayload(client);
+		client.setId(id);
 
 		return clientService.addClient(client);
 	}
